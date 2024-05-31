@@ -91,6 +91,12 @@ def open_token_url(event):
 def open_command_line_options_url(event):
     webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
 
+def open_github_releases():
+    webbrowser.open_new("https://github.com/EierkuchenHD/FortressForge/releases/")
+
+def open_upnp_portmapper_page():
+    webbrowser.open_new("https://github.com/kaklakariada/portmapper/releases/")
+
 # Function to check if mandatory fields are filled
 def check_mandatory_fields(*args):
     if entry_name.get() and entry_port.get() and entry_max_players.get() and entry_map.get():
@@ -107,8 +113,6 @@ root.title("FortressForge")
 
 # Menu bar
 menubar = tk.Menu(root)
-filemenu = tk.Menu(menubar, tearoff=0)
-menubar.add_cascade(label="File", menu=filemenu)
 
 pluginmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Plugins", menu=pluginmenu)
@@ -123,7 +127,9 @@ for theme in root.get_themes():
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.add_command(label="Open Steam Guide", command=open_steam_guide)
+helpmenu.add_command(label="Download UPnP Portmapper", command=open_upnp_portmapper_page)
 helpmenu.add_command(label="Open GitHub Repository", command=open_github_repo)
+helpmenu.add_command(label="Check for new releases", command=open_github_releases)
 
 root.config(menu=menubar)
 
@@ -177,10 +183,11 @@ entry_password.grid(row=4, column=1, padx=10, pady=5)
 
 # UDP Port
 ttk.Label(root, text="UDP Port*:").grid(row=5, column=0, padx=10, pady=5, sticky="e")
-entry_port = ttk.Entry(root, validate='key', validatecommand=vcmd, width=50)
-entry_port.grid(row=5, column=1, padx=10, pady=5)
+entry_port = ttk.Entry(root, validate='key', validatecommand=vcmd, width=10)  # Change width to 10
+entry_port.grid(row=5, column=1, padx=10, pady=5, sticky="w")  # Add sticky="w" to align with the max players field
 entry_port.insert(0, "27015")
 entry_port.bind("<KeyRelease>", check_mandatory_fields)
+
 
 # Game Server Login Token
 token_label = ttk.Label(root, text="Game Server Login Token:")
