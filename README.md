@@ -25,7 +25,7 @@ FortressForge is a user-friendly graphical interface designed to simplify the pr
 
 ### Installation
 
-Download the latest release of FortressForge under **Releases**. It is recommended to put this file into your server directory where `srcds_win64.exe` is located.
+Download the latest release of FortressForge under [Releases](https://github.com/EierkuchenHD/FortressForge/releases/tag/v1.0.0). It is recommended to put this file into your server directory where `srcds_win64.exe` is located.
 
 ## Acknowledgements
 
