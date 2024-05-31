@@ -30,5 +30,3 @@ Download the latest release of FortressForge under **Releases**. Put this file i
 - Thanks to the AlliedModders community for helping me out with server issues I had!
 - Thanks to AndrSator, creator of [SteamCMD-GUI](https://github.com/AndrSator/SteamCMD-GUI)
 - Thanks to everyone who played on my community server!
-
----
