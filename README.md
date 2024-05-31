@@ -27,8 +27,9 @@ Download the latest release of FortressForge under **Releases**. Put this file i
 
 ## Acknowledgements
 
-- Thanks to the Valve Developer Community for providing extensive documentation on command-line options and server management.
-- Inspired by the need to simplify TF2 server management for casual and competitive play.
+- Thanks to the AlliedModders community for helping me out with server issues I had!
+- Thanks to AndrSator, creator of [SteamCMD-GUI](https://github.com/AndrSator/SteamCMD-GUI)
+- Thanks to everyone who played on my community server!
 
 ---
 
