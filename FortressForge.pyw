@@ -134,7 +134,7 @@ vcmd = (root.register(validate_number), '%P')
 vcmd_max_players = (root.register(validate_max_players), '%P')
 
 # Executable file path
-ttk.Label(root, text="Path to srcds_win64.exe OR scrds.exe*").grid(row=0, column=0, padx=10, pady=5, sticky="e")
+ttk.Label(root, text="Path to srcds_win64.exe OR srcds.exe*").grid(row=0, column=0, padx=10, pady=5, sticky="e")
 entry_exe = ttk.Entry(root, width=50)
 entry_exe.grid(row=0, column=1, padx=10, pady=5)
 entry_exe.bind("<KeyRelease>", check_mandatory_fields)
