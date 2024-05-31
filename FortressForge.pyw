@@ -111,6 +111,7 @@ def switch_theme(new_theme):
 # Initialize the GUI window with a modern theme
 root = ThemedTk(theme="breeze")  # You can replace "arc" with any other theme provided by ttkthemes
 root.title("FortressForge")
+root.minsize(750, 500)
 
 # Menu bar
 menubar = tk.Menu(root)
