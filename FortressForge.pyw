@@ -109,7 +109,7 @@ def switch_theme(new_theme):
 
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
-root.title("FortressForge")
+root.title("FortressForge v1.1.1")
 root.minsize(650, 400)
 
 # Menu bar
