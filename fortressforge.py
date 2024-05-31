@@ -78,6 +78,10 @@ def open_sourcemod():
 def open_metamod_source():
     webbrowser.open_new("https://www.sourcemm.net/downloads.php?branch=master&all=1")
 
+# Function to open the GitHub repository URL
+def open_github_repo():
+    webbrowser.open_new("https://github.com/EierkuchenHD/FortressForge")
+
 # Function to open the Steam Game Server Login Token page
 def open_token_url(event):
     webbrowser.open_new("https://steamcommunity.com/dev/managegameservers")
@@ -114,6 +118,7 @@ pluginmenu.add_command(label="Open MetaMod:Source Download Page", command=open_m
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.add_command(label="Open Steam Guide", command=open_steam_guide)
+helpmenu.add_command(label="Open GitHub Repository", command=open_github_repo)
 
 root.config(menu=menubar)
 
