@@ -12,8 +12,8 @@ def run_server():
     host_name = entry_name.get()
     map_name = entry_map.get()
     max_players = entry_max_players.get()
-    password = entry_password.get()
     port = entry_port.get()
+    password = entry_password.get()
     token = entry_token.get()
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
@@ -178,16 +178,16 @@ entry_max_players.insert(0, "24")
 entry_max_players.bind("<KeyRelease>", check_mandatory_fields)
 
 # UDP Port
-ttk.Label(root, text="UDP Port*").grid(row=5, column=0, padx=10, pady=5, sticky="e")
+ttk.Label(root, text="UDP Port*").grid(row=4, column=0, padx=10, pady=5, sticky="e")
 entry_port = ttk.Entry(root, validate='key', validatecommand=vcmd, width=10)  # Change width to 10
-entry_port.grid(row=5, column=1, padx=10, pady=5, sticky="w")  # Add sticky="w" to align with the max players field
+entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")  # Add sticky="w" to align with the max players field
 entry_port.insert(0, "27015")
 entry_port.bind("<KeyRelease>", check_mandatory_fields)
 
 # Server Password
-ttk.Label(root, text="Server Password").grid(row=4, column=0, padx=10, pady=5, sticky="e")
+ttk.Label(root, text="Server Password").grid(row=5, column=0, padx=10, pady=5, sticky="e")
 entry_password = ttk.Entry(root, width=50)
-entry_password.grid(row=4, column=1, padx=10, pady=5)
+entry_password.grid(row=5, column=1, padx=10, pady=5)
 
 # Game Server Login Token
 token_label = ttk.Label(root, text="Game Server Login Token")
