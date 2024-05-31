@@ -32,8 +32,3 @@ Download the latest release of FortressForge under **Releases**. Put this file i
 - Thanks to everyone who played on my community server!
 
 ---
-
-### Notes
-
-- Ensure you have the necessary permissions and firewall settings configured to run a server on your machine.
-- For detailed guidance on obtaining and using a Game Server Login Token, refer to the [Steam Community](https://steamcommunity.com/dev/managegameservers).
