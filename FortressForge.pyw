@@ -4,7 +4,6 @@ from tkinter import ttk
 import os
 import subprocess
 import webbrowser
-from ttkthemes import ThemedTk
 
 # Function to run the server
 def run_server():
@@ -109,22 +108,17 @@ def switch_theme(new_theme):
     root.set_theme(new_theme)
 
 # Initialize the GUI window with a modern theme
-root = ThemedTk(theme="breeze")  # You can replace "arc" with any other theme provided by ttkthemes
+root = tk.Tk()
 root.title("FortressForge")
-root.minsize(750, 500)
+root.minsize(650, 350)
 
 # Menu bar
 menubar = tk.Menu(root)
 
 pluginmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Plugins", menu=pluginmenu)
-pluginmenu.add_command(label="Open SourceMod Download Page", command=open_sourcemod)  # Added command for SourceMod
-pluginmenu.add_command(label="Open MetaMod:Source Download Page", command=open_metamod_source)  # Added command for MetaMod:Source
-
-themes_menu = tk.Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Themes", menu=themes_menu)
-for theme in root.get_themes():
-    themes_menu.add_command(label=theme, command=lambda t=theme: switch_theme(t))
+pluginmenu.add_command(label="Open SourceMod Download Page", command=open_sourcemod)
+pluginmenu.add_command(label="Open MetaMod:Source Download Page", command=open_metamod_source)
 
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
