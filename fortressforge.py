@@ -66,6 +66,18 @@ def validate_max_players(P):
     else:
         return False
 
+# Function to open the Steam Guide URL
+def open_steam_guide():
+    webbrowser.open_new("https://steamcommunity.com/sharedfiles/filedetails/?id=3256322927")
+
+# Function to open the SourceMod URL
+def open_sourcemod():
+    webbrowser.open_new("https://www.sourcemod.net/downloads.php?branch=stable")
+
+# Function to open the MetaMod:Source URL
+def open_metamod_source():
+    webbrowser.open_new("https://www.sourcemm.net/downloads.php?branch=master&all=1")
+
 # Function to open the Steam Game Server Login Token page
 def open_token_url(event):
     webbrowser.open_new("https://steamcommunity.com/dev/managegameservers")
@@ -96,9 +108,12 @@ menubar.add_cascade(label="File", menu=filemenu)
 
 pluginmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Plugins", menu=pluginmenu)
+pluginmenu.add_command(label="Open SourceMod Download Page", command=open_sourcemod)  # Added command for SourceMod
+pluginmenu.add_command(label="Open MetaMod:Source Download Page", command=open_metamod_source)  # Added command for MetaMod:Source
 
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
+helpmenu.add_command(label="Open Steam Guide", command=open_steam_guide)
 
 root.config(menu=menubar)
 
