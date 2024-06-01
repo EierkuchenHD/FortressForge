@@ -22,6 +22,15 @@ def run_server():
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
 
+     # Function to check if required fields are filled in
+    if not host_name or not port or not max_players or not map_name:
+        messagebox.showwarning("Input Error", "Host Name, UDP Port, Maximum Amount of Players, and Map are required fields.")
+        return
+
+    if not os.path.isfile(server_exe):
+        messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
+        return
+
     if not os.path.isfile(server_exe):
         messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
         return
@@ -96,13 +105,6 @@ def open_token_url(event):
 def open_command_line_options_url(event):
     webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
 
-# Function to check if mandatory fields are filled
-def check_mandatory_fields(*args):
-    if entry_name.get() and entry_port.get() and entry_max_players.get() and entry_map.get():
-        run_button.state(["!disabled"])
-    else:
-        run_button.state(["disabled"])
-
 def toggle_password_visibility():
     entry_password.config(show='' if password_var.get() else '*')
 
@@ -157,7 +159,6 @@ vcmd_max_portnumber = (root.register(validate_max_portnumber), '%P')
 ttk.Label(root, text="Path to srcds_win64.exe OR srcds.exe*", font=("Segoe UI", 9)).grid(row=0, column=0, padx=10, pady=5, sticky="e")
 entry_exe = ttk.Entry(root, width=50)
 entry_exe.grid(row=0, column=1, padx=10, pady=5)
-entry_exe.bind("<KeyRelease>", check_mandatory_fields)
 browse_button = ttk.Button(root, text="Browse", command=browse_file)
 browse_button.grid(row=0, column=2, padx=10, pady=5)
 
@@ -166,25 +167,20 @@ ttk.Label(root, text="Host Name*", font=("Segoe UI", 9)).grid(row=1, column=0, p
 entry_name = ttk.Entry(root, width=50)
 entry_name.grid(row=1, column=1, padx=10, pady=5)
 
-entry_name.bind("<KeyRelease>", check_mandatory_fields)
-
 # Map
 ttk.Label(root, text="Map*", font=("Segoe UI", 9)).grid(row=2, column=0, padx=10, pady=5, sticky="e")
 entry_map = ttk.Entry(root, width=50)
 entry_map.grid(row=2, column=1, padx=10, pady=5)
-entry_map.bind("<KeyRelease>", check_mandatory_fields)
 
 # Max Players
 ttk.Label(root, text="Max Players (1-100)*", font=("Segoe UI", 9)).grid(row=3, column=0, padx=10, pady=5, sticky="e")
 entry_max_players = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_players)
 entry_max_players.grid(row=3, column=1, padx=10, pady=5, sticky="w")
-entry_max_players.bind("<KeyRelease>", check_mandatory_fields)
 
 # UDP Port
 ttk.Label(root, text="UDP Port (1-65535)*", font=("Segoe UI", 9)).grid(row=4, column=0, padx=10, pady=5, sticky="e")
 entry_port = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_portnumber)
 entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")
-entry_port.bind("<KeyRelease>", check_mandatory_fields)
 
 # Server Password
 ttk.Label(root, text="Server Password", font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
@@ -222,7 +218,6 @@ entry_options.grid(row=8, column=1, padx=10, pady=5)
 # Run Server Button
 run_button = ttk.Button(root, text="Run Server", command=run_server)
 run_button.grid(row=9, column=1, padx=10, pady=10, sticky="w")
-run_button.state(["disabled"])
 
 # Save Config Button
 save_button = ttk.Button(root, text="Save Config", command=save_configuration)
