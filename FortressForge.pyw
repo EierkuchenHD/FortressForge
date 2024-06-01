@@ -102,6 +102,18 @@ def check_mandatory_fields(*args):
     else:
         run_button.state(["disabled"])
 
+def toggle_token_visibility():
+    if token_var.get():
+        entry_token.config(show='')
+    else:
+        entry_token.config(show='*')
+
+def toggle_rcon_visibility():
+    if rcon_var.get():
+        entry_rcon_password.config(show='')
+    else:
+        entry_rcon_password.config(show='*')
+
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.1.1")
@@ -185,24 +197,33 @@ entry_password.grid(row=5, column=1, padx=10, pady=5)
 # Game Server Login Token
 token_label = ttk.Label(root, text="Game Server Login Token")
 token_label.grid(row=6, column=0, padx=10, pady=5, sticky="e")
+
 token_link = tk.Label(root, text="(Get Token)", font=("Segoe UI", 8), fg="blue", cursor="hand2")
-token_link.grid(row=6, column=2, padx=10, pady=5, sticky="w")
+token_link.grid(row=6, column=3, padx=10, pady=5, sticky="w")
 token_link.bind("<Button-1>", open_token_url)
+
 entry_token = ttk.Entry(root, width=50, show="*")
 entry_token.grid(row=6, column=1, padx=10, pady=5)
 
+token_var = tk.BooleanVar()
+token_checkbox = ttk.Checkbutton(root, text="Show", variable=token_var, command=toggle_token_visibility)
+token_checkbox.grid(row=6, column=2, padx=10, pady=5)
+
 # RCON Password
 ttk.Label(root, text="RCON Password").grid(row=7, column=0, padx=10, pady=5, sticky="e")
-entry_rcon_password = ttk.Entry(root, width=50)
-entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
+
 entry_rcon_password = ttk.Entry(root, width=50, show="*")
 entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
+
+rcon_var = tk.BooleanVar()
+rcon_checkbox = ttk.Checkbutton(root, text="Show", variable=rcon_var, command=toggle_rcon_visibility)
+rcon_checkbox.grid(row=7, column=2, padx=10, pady=5)
 
 # Command Line Options
 command_line_label = ttk.Label(root, text="Command Line Options")
 command_line_label.grid(row=8, column=0, padx=10, pady=5, sticky="e")
 command_line_link = tk.Label(root, text="(More Info)", font=("Segoe UI", 8), fg="blue", cursor="hand2")
-command_line_link.grid(row=8, column=2, padx=10, pady=5, sticky="w")
+command_line_link.grid(row=8, column=3, padx=10, pady=5, sticky="w")
 command_line_link.bind("<Button-1>", open_command_line_options_url)
 entry_options = ttk.Entry(root, width=50)
 entry_options.grid(row=8, column=1, padx=10, pady=5)
