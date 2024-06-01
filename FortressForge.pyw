@@ -102,9 +102,6 @@ def check_mandatory_fields(*args):
     else:
         run_button.state(["disabled"])
 
-def switch_theme(new_theme):
-    root.set_theme(new_theme)
-
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.1.1")
