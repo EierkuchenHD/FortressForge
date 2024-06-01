@@ -115,7 +115,7 @@ def toggle_rcon_visibility():
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.1.2")
-root.minsize(650, 400)
+root.minsize(680, 400)
 
 # Menu bar
 menubar = tk.Menu(root)
@@ -164,6 +164,15 @@ browse_button.grid(row=0, column=2, padx=10, pady=5)
 ttk.Label(root, text="Host Name*", font=("Segoe UI", 9)).grid(row=1, column=0, padx=10, pady=5, sticky="e")
 entry_name = ttk.Entry(root, width=50)
 entry_name.grid(row=1, column=1, padx=10, pady=5)
+
+# Mandatory Fields Note
+mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
+mandatory_note.grid(row=10, column=0, columnspan=3, pady=5)
+
+# Note that srcds_win64.exe is not compatible with 64bit
+bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
+bit_note.grid(row=11, column=0, columnspan=3, pady=5)
+
 entry_name.bind("<KeyRelease>", check_mandatory_fields)
 
 ttk.Label(root, text="Map*", font=("Segoe UI", 9)).grid(row=2, column=0, padx=10, pady=5, sticky="e")
@@ -195,7 +204,7 @@ token_label.bind("<Button-1>", open_token_url)
 entry_token = ttk.Entry(root, width=50, show="*")
 entry_token.grid(row=6, column=1, padx=10, pady=5)
 token_var = tk.BooleanVar()
-show_token = ttk.Checkbutton(root, text="Show Token", variable=token_var, command=toggle_token_visibility)
+show_token = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=toggle_token_visibility)
 show_token.grid(row=6, column=2, padx=10, pady=5, sticky="w")
 
 ttk.Label(root, text="RCON Password", font=("Segoe UI", 9)).grid(row=7, column=0, padx=10, pady=5, sticky="e")
@@ -205,8 +214,8 @@ rcon_var = tk.BooleanVar()
 show_rcon = ttk.Checkbutton(root, text="Show RCON", variable=rcon_var, command=toggle_rcon_visibility)
 show_rcon.grid(row=7, column=2, padx=10, pady=5, sticky="w")
 
-# Command Line Options with hyperlink
-options_label = ttk.Label(root, text="Command Line Options", font=("Segoe UI", 9, "underline"), foreground="blue", cursor="hand2")
+# Other Command Line Options with hyperlink
+options_label = ttk.Label(root, text="Other Command Line Options", font=("Segoe UI", 9, "underline"), foreground="blue", cursor="hand2")
 options_label.grid(row=8, column=0, padx=10, pady=5, sticky="e")
 options_label.bind("<Button-1>", open_command_line_options_url)
 entry_options = ttk.Entry(root, width=50)
