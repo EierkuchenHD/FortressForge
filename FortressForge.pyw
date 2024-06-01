@@ -5,12 +5,14 @@ import os
 import subprocess
 import webbrowser
 import json
+import threading
 
 # Get the directory of the running script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(script_dir, "server_config.json")
 
 # Function to run the server
+
 def run_server():
     server_exe = entry_exe.get()
     host_name = entry_name.get()
@@ -31,21 +33,20 @@ def run_server():
         messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
         return
 
-    if not os.path.isfile(server_exe):
-        messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
-        return
-
     command = f'"{server_exe}" -game tf -console -secure -port {port} +maxplayers {max_players} +map {map_name} +hostname "{host_name}"'
     if password:
-        command += f" +sv_password \"{password}\""
+        command += f' +sv_password "{password}"'
     if token:
-        command += f" +sv_setsteamaccount \"{token}\""
+        command += f' +sv_setsteamaccount "{token}"'
     if command_line_options:
-        command += f" {command_line_options}"
+        command += f' {command_line_options}'
     if rcon_password:
-        command += f" +rcon_password \"{rcon_password}\""
+        command += f' +rcon_password "{rcon_password}"'
 
-    subprocess.run(command, shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
+    def run_command():
+        subprocess.Popen(command, shell=True)
+
+    threading.Thread(target=run_command).start()
 
 # Function to browse for the executable
 def browse_file():
