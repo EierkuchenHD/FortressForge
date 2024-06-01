@@ -220,6 +220,9 @@ save_button.grid(row=0, column=1, padx=5)
 # Mandatory Fields Note
 mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
 mandatory_note.grid(row=10, column=0, columnspan=3, pady=5)
+# Note that srcds_win64.exe is not compatible with 64bit
+bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
+bit_note.grid(row=11, column=0, columnspan=3, pady=5)
 
 # Track changes in mandatory fields to enable/disable the Run button
 entry_name.bind("<KeyRelease>", check_mandatory_fields)
