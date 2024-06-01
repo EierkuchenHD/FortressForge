@@ -115,7 +115,7 @@ def toggle_rcon_visibility():
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.1.2")
-root.minsize(680, 400)
+root.minsize(700, 400)
 
 # Menu bar
 menubar = tk.Menu(root)
@@ -153,7 +153,7 @@ root.config(menu=menubar)
 vcmd_max_players = (root.register(validate_max_players), '%P')
 vcmd_max_portnumber = (root.register(validate_max_portnumber), '%P')
 
-# GUI elements
+# Path to the executable
 ttk.Label(root, text="Path to srcds_win64.exe OR srcds.exe*", font=("Segoe UI", 9)).grid(row=0, column=0, padx=10, pady=5, sticky="e")
 entry_exe = ttk.Entry(root, width=50)
 entry_exe.grid(row=0, column=1, padx=10, pady=5)
@@ -161,35 +161,32 @@ entry_exe.bind("<KeyRelease>", check_mandatory_fields)
 browse_button = ttk.Button(root, text="Browse", command=browse_file)
 browse_button.grid(row=0, column=2, padx=10, pady=5)
 
+# Host Name
 ttk.Label(root, text="Host Name*", font=("Segoe UI", 9)).grid(row=1, column=0, padx=10, pady=5, sticky="e")
 entry_name = ttk.Entry(root, width=50)
 entry_name.grid(row=1, column=1, padx=10, pady=5)
 
-# Mandatory Fields Note
-mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
-mandatory_note.grid(row=10, column=0, columnspan=3, pady=5)
-
-# Note that srcds_win64.exe is not compatible with 64bit
-bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
-bit_note.grid(row=11, column=0, columnspan=3, pady=5)
-
 entry_name.bind("<KeyRelease>", check_mandatory_fields)
 
+# Map
 ttk.Label(root, text="Map*", font=("Segoe UI", 9)).grid(row=2, column=0, padx=10, pady=5, sticky="e")
 entry_map = ttk.Entry(root, width=50)
 entry_map.grid(row=2, column=1, padx=10, pady=5)
 entry_map.bind("<KeyRelease>", check_mandatory_fields)
 
+# Max Players
 ttk.Label(root, text="Max Players (1-100)*", font=("Segoe UI", 9)).grid(row=3, column=0, padx=10, pady=5, sticky="e")
 entry_max_players = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_players)
 entry_max_players.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 entry_max_players.bind("<KeyRelease>", check_mandatory_fields)
 
+# UDP Port
 ttk.Label(root, text="UDP Port (1-65535)*", font=("Segoe UI", 9)).grid(row=4, column=0, padx=10, pady=5, sticky="e")
 entry_port = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_portnumber)
 entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 entry_port.bind("<KeyRelease>", check_mandatory_fields)
 
+# Server Password
 ttk.Label(root, text="Server Password", font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
 entry_password = ttk.Entry(root, width=50, show="*")
 entry_password.grid(row=5, column=1, padx=10, pady=5)
@@ -207,6 +204,7 @@ token_var = tk.BooleanVar()
 show_token = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=toggle_token_visibility)
 show_token.grid(row=6, column=2, padx=10, pady=5, sticky="w")
 
+# RCON Password
 ttk.Label(root, text="RCON Password", font=("Segoe UI", 9)).grid(row=7, column=0, padx=10, pady=5, sticky="e")
 entry_rcon_password = ttk.Entry(root, width=50, show="*")
 entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
@@ -221,12 +219,22 @@ options_label.bind("<Button-1>", open_command_line_options_url)
 entry_options = ttk.Entry(root, width=50)
 entry_options.grid(row=8, column=1, padx=10, pady=5)
 
+# Run Server Button
 run_button = ttk.Button(root, text="Run Server", command=run_server)
 run_button.grid(row=9, column=1, padx=10, pady=10, sticky="w")
 run_button.state(["disabled"])
 
+# Save Config Button
 save_button = ttk.Button(root, text="Save Config", command=save_configuration)
 save_button.grid(row=9, column=1, padx=10, pady=10, sticky="e")
+
+# Mandatory Fields Note
+mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
+mandatory_note.grid(row=10, column=0, columnspan=3, pady=5)
+
+# Note that srcds_win64.exe is not compatible with 64bit
+bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
+bit_note.grid(row=11, column=0, columnspan=3, pady=5)
 
 # Load the configuration when the application starts
 load_configuration()
