@@ -198,6 +198,8 @@ entry_token.grid(row=6, column=1, padx=10, pady=5)
 ttk.Label(root, text="RCON Password").grid(row=7, column=0, padx=10, pady=5, sticky="e")
 entry_rcon_password = ttk.Entry(root, width=50)
 entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
+entry_rcon_password = ttk.Entry(root, width=50, show="*")
+entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
 
 # Command Line Options
 command_line_label = ttk.Label(root, text="Command Line Options")
