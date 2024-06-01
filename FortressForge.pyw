@@ -117,6 +117,12 @@ def toggle_rcon_visibility():
     else:
         entry_rcon_password.config(show='*')
 
+def toggle_password_visibility():
+    if password_var.get():
+        entry_password.config(show='')
+    else:
+        entry_password.config(show='*')
+
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.1.1")
@@ -210,9 +216,13 @@ entry_port.insert(0, "27015")
 entry_port.bind("<KeyRelease>", check_mandatory_fields)
 
 # Server Password
-ttk.Label(root, text="Server Password",font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
-entry_password = ttk.Entry(root, width=50)
+ttk.Label(root, text="Server Password", font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
+entry_password = ttk.Entry(root, width=50, show="*")
 entry_password.grid(row=5, column=1, padx=10, pady=5)
+
+password_var = tk.BooleanVar()
+password_checkbox = ttk.Checkbutton(root, text="Show", variable=password_var, command=toggle_password_visibility)
+password_checkbox.grid(row=5, column=2, padx=10, pady=5)
 
 # Game Server Login Token (Hyperlink)
 token_label = tk.Label(root, text="Game Server Login Token", font=("Segoe UI", 9, "underline"), fg="blue", cursor="hand2")
