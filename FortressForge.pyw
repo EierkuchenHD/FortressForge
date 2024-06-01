@@ -22,7 +22,7 @@ def run_server():
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
 
-     # Function to check if required fields are filled in
+    # Function to check if required fields are filled in
     if not host_name or not port or not max_players or not map_name:
         messagebox.showwarning("Input Error", "Host Name, UDP Port, Maximum Amount of Players, and Map are required fields.")
         return
@@ -53,7 +53,6 @@ def browse_file():
     if filename:
         entry_exe.delete(0, tk.END)
         entry_exe.insert(0, filename)
-    check_mandatory_fields()
 
 # Function to save the configuration
 def save_configuration():
