@@ -62,6 +62,15 @@ def validate_max_players(P):
     else:
         return False
 
+# Function to validate the range of max portnumber
+def validate_max_portnumber(P):
+    if P.isdigit() and 1 <= int(P) <= 99999:
+        return True
+    elif P == "":
+        return True
+    else:
+        return False
+
 def open_kvmanager_page():
     webbrowser.open_new("https://forums.alliedmods.net/showthread.php?t=81160")
 
@@ -119,8 +128,11 @@ helpmenu.add_command(label="Open GitHub Repository", command=open_github_repo)
 root.config(menu=menubar)
 
 # Input validation for numerical fields
+# Max Players
 vcmd = (root.register(validate_number), '%P')
 vcmd_max_players = (root.register(validate_max_players), '%P')
+# Port Ranges
+vcmd_max_portnumber = (root.register(validate_max_portnumber), '%P')
 
 # Executable file path
 ttk.Label(root, text="Path to srcds_win64.exe OR srcds.exe*").grid(row=0, column=0, padx=10, pady=5, sticky="e")
@@ -163,7 +175,7 @@ entry_max_players.bind("<KeyRelease>", check_mandatory_fields)
 
 # UDP Port
 ttk.Label(root, text="UDP Port*").grid(row=4, column=0, padx=10, pady=5, sticky="e")
-entry_port = ttk.Entry(root, validate='key', validatecommand=vcmd, width=10)  # Change width to 10
+entry_port = ttk.Entry(root, validate='key', validatecommand=vcmd_max_portnumber, width=10)  # Change width to 10
 entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")  # Add sticky="w" to align with the max players field
 entry_port.insert(0, "27015")
 entry_port.bind("<KeyRelease>", check_mandatory_fields)
