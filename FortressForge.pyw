@@ -95,6 +95,9 @@ def open_token_url(event):
 def open_command_line_options_url(event):
     webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
 
+def open_steamcmd_page():
+    webbrowser.open_new("https://developer.valvesoftware.com/wiki/SteamCMD")
+
 # Function to check if mandatory fields are filled
 def check_mandatory_fields(*args):
     if entry_name.get() and entry_port.get() and entry_max_players.get() and entry_map.get():
@@ -122,17 +125,34 @@ root.minsize(650, 400)
 # Menu bar
 menubar = tk.Menu(root)
 
+# Define menu items and their corresponding functions in a dictionary
+menu_items = {
+    "SteamCMD": open_steamcmd_page,
+    "UPnP Portmapper": open_upnp_portmapper_page,
+    "KVManager": open_kvmanager_page,
+    "SourceMod": open_sourcemod,
+    "MetaMod:Source": open_metamod_source
+}
+
+# Create downloads menu using the dictionary
 downloadsmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Downloads", menu=downloadsmenu)
-downloadsmenu.add_command(label="UPnP Portmapper", command=open_upnp_portmapper_page)
-downloadsmenu.add_command(label="KVManager", command=open_kvmanager_page)
-downloadsmenu.add_command(label="SourceMod", command=open_sourcemod)
-downloadsmenu.add_command(label="MetaMod:Source", command=open_metamod_source)
+for label, function in menu_items.items():
+    downloadsmenu.add_command(label=label, command=function)
 
+
+# Define menu items and their corresponding functions in a dictionary for Help menu
+help_menu_items = {
+    "Open Steam Guide": open_steam_guide,
+    "Open GitHub Repository": open_github_repo
+}
+
+# Create help menu using the dictionary
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
-helpmenu.add_command(label="Open Steam Guide", command=open_steam_guide)
-helpmenu.add_command(label="Open GitHub Repository", command=open_github_repo)
+for label, function in help_menu_items.items():
+    helpmenu.add_command(label=label, command=function)
+
 
 root.config(menu=menubar)
 
