@@ -61,7 +61,7 @@ def save_configuration():
     }
     with open(config_file_path, "w") as config_file:
         json.dump(config, config_file, indent=4)
-    messagebox.showinfo("Save", "Configuration saved successfully.")
+    messagebox.showinfo("Save", "Configuration successfully saved in server_config.json.")
 
 # Function to load the configuration
 def load_configuration():
