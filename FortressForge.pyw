@@ -194,13 +194,10 @@ ttk.Label(root, text="Server Password").grid(row=5, column=0, padx=10, pady=5, s
 entry_password = ttk.Entry(root, width=50)
 entry_password.grid(row=5, column=1, padx=10, pady=5)
 
-# Game Server Login Token
-token_label = ttk.Label(root, text="Game Server Login Token")
+# Game Server Login Token (Hyperlink)
+token_label = tk.Label(root, text="Game Server Login Token", font=("Segoe UI", 8, "underline"), fg="blue", cursor="hand2")
 token_label.grid(row=6, column=0, padx=10, pady=5, sticky="e")
-
-token_link = tk.Label(root, text="(Get Token)", font=("Segoe UI", 8), fg="blue", cursor="hand2")
-token_link.grid(row=6, column=3, padx=10, pady=5, sticky="w")
-token_link.bind("<Button-1>", open_token_url)
+token_label.bind("<Button-1>", open_token_url)
 
 entry_token = ttk.Entry(root, width=50, show="*")
 entry_token.grid(row=6, column=1, padx=10, pady=5)
@@ -219,12 +216,11 @@ rcon_var = tk.BooleanVar()
 rcon_checkbox = ttk.Checkbutton(root, text="Show", variable=rcon_var, command=toggle_rcon_visibility)
 rcon_checkbox.grid(row=7, column=2, padx=10, pady=5)
 
-# Command Line Options
-command_line_label = ttk.Label(root, text="Command Line Options")
+# Command Line Options (Hyperlink)
+command_line_label = tk.Label(root, text="Command Line Options", font=("Segoe UI", 8, "underline"), fg="blue", cursor="hand2")
 command_line_label.grid(row=8, column=0, padx=10, pady=5, sticky="e")
-command_line_link = tk.Label(root, text="(More Info)", font=("Segoe UI", 8), fg="blue", cursor="hand2")
-command_line_link.grid(row=8, column=3, padx=10, pady=5, sticky="w")
-command_line_link.bind("<Button-1>", open_command_line_options_url)
+command_line_label.bind("<Button-1>", open_command_line_options_url)
+
 entry_options = ttk.Entry(root, width=50)
 entry_options.grid(row=8, column=1, padx=10, pady=5)
 
