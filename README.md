@@ -12,8 +12,8 @@ FortressForge is a user-friendly graphical interface designed to simplify the pr
 - **Host Name**: Set a custom name for your server.
 - **Map Selection**: Choose the initial map for your server.
 - **Maximum Players**: Define the maximum number of players allowed on the server (1-100).
-- **Password Protection**: Optionally set a password for server access.
 - **UDP Port**: Set the port on which your server will run, defaulting to 27015.
+- **Server Password**: Optionally set a password for server access.
 - **Game Server Login Token (GSLT)**: Let your server remain in users' favorites list even if your IP/Port changes.
 - **RCON Password**: Set a remote console (RCON) password to manage your server remotely.
 - **Command Line Options**: Add any additional command-line options as needed.
