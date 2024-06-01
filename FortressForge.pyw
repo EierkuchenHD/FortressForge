@@ -6,6 +6,10 @@ import subprocess
 import webbrowser
 import json
 
+# Get the directory of the running script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(script_dir, "server_config.json")
+
 # Function to run the server
 def run_server():
     server_exe = entry_exe.get()
@@ -55,14 +59,14 @@ def save_configuration():
         "rcon_password": entry_rcon_password.get(),
         "command_line_options": entry_options.get()
     }
-    with open("server_config.json", "w") as config_file:
+    with open(config_file_path, "w") as config_file:
         json.dump(config, config_file, indent=4)
-    messagebox.showinfo("Save", "Configuration succesfully saved in server_config.json.")
+    messagebox.showinfo("Save", "Configuration saved successfully.")
 
 # Function to load the configuration
 def load_configuration():
-    if os.path.isfile("server_config.json"):
-        with open("server_config.json", "r") as config_file:
+    if os.path.isfile(config_file_path):
+        with open(config_file_path, "r") as config_file:
             config = json.load(config_file)
             entry_exe.insert(0, config.get("server_exe", ""))
             entry_name.insert(0, config.get("host_name", ""))
