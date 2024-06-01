@@ -62,38 +62,29 @@ def validate_max_players(P):
     else:
         return False
 
-# Function to open the Steam Guide URL
-def open_steam_guide():
-    webbrowser.open_new("https://steamcommunity.com/sharedfiles/filedetails/?id=3256322927")
-
-# Function to open the SourceMod URL
-def open_sourcemod():
-    webbrowser.open_new("https://www.sourcemod.net/downloads.php?branch=stable")
-
-# Function to open the MetaMod:Source URL
-def open_metamod_source():
-    webbrowser.open_new("https://www.sourcemm.net/downloads.php?branch=master&all=1")
-
-# Function to open the GitHub repository URL
-def open_github_repo():
-    webbrowser.open_new("https://github.com/EierkuchenHD/FortressForge")
-
-# Function to open the Steam Game Server Login Token page
-def open_token_url(event):
-    webbrowser.open_new("https://steamcommunity.com/dev/managegameservers")
-
-# Function to open the Command Line Options page
-def open_command_line_options_url(event):
-    webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
-
-def open_github_releases():
-    webbrowser.open_new("https://github.com/EierkuchenHD/FortressForge/releases/")
+def open_kvmanager_page():
+    webbrowser.open_new("https://forums.alliedmods.net/showthread.php?t=81160")
 
 def open_upnp_portmapper_page():
     webbrowser.open_new("https://github.com/kaklakariada/portmapper/releases/")
 
-def open_kvmanager_page():
-    webbrowser.open_new("https://forums.alliedmods.net/showthread.php?t=81160")
+def open_sourcemod():
+    webbrowser.open_new("https://www.sourcemod.net/downloads.php?branch=stable")
+
+def open_metamod_source():
+    webbrowser.open_new("https://www.sourcemm.net/downloads.php?branch=master&all=1")
+
+def open_steam_guide():
+    webbrowser.open_new("https://steamcommunity.com/sharedfiles/filedetails/?id=3256322927")
+
+def open_github_repo():
+    webbrowser.open_new("https://github.com/EierkuchenHD/FortressForge")
+
+def open_token_url(event):
+    webbrowser.open_new("https://steamcommunity.com/dev/managegameservers")
+
+def open_command_line_options_url(event):
+    webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
 
 # Function to check if mandatory fields are filled
 def check_mandatory_fields(*args):
@@ -115,8 +106,8 @@ menubar = tk.Menu(root)
 
 downloadsmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Downloads", menu=downloadsmenu)
-downloadsmenu.add_command(label="KVManager", command=open_kvmanager_page)
 downloadsmenu.add_command(label="UPnP Portmapper", command=open_upnp_portmapper_page)
+downloadsmenu.add_command(label="KVManager", command=open_kvmanager_page)
 downloadsmenu.add_command(label="SourceMod", command=open_sourcemod)
 downloadsmenu.add_command(label="MetaMod:Source", command=open_metamod_source)
 
