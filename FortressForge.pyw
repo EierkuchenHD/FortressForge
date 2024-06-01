@@ -17,11 +17,6 @@ def run_server():
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
 
-    # Debugging if-statement
-    if not host_name or not port or not max_players or not map_name:
-        messagebox.showwarning("Input Error", "Host Name, UDP Port, Maximum Amount of Players, and Map are required fields.")
-        return
-
     if not os.path.isfile(server_exe):
         messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
         return
@@ -38,7 +33,7 @@ def run_server():
 
     subprocess.run(command, shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
-# Function to browse for the srcds_win64.exe file
+# Function to browse for the executable
 def browse_file():
     filename = filedialog.askopenfilename(filetypes=[("Executable files", "*.exe")])
     if filename:
@@ -97,6 +92,9 @@ def open_github_releases():
 def open_upnp_portmapper_page():
     webbrowser.open_new("https://github.com/kaklakariada/portmapper/releases/")
 
+def open_kvmanager_page():
+    webbrowser.open_new("https://forums.alliedmods.net/showthread.php?t=81160")
+
 # Function to check if mandatory fields are filled
 def check_mandatory_fields(*args):
     if entry_name.get() and entry_port.get() and entry_max_players.get() and entry_map.get():
@@ -115,17 +113,17 @@ root.minsize(650, 400)
 # Menu bar
 menubar = tk.Menu(root)
 
-pluginmenu = tk.Menu(menubar, tearoff=0)
-menubar.add_cascade(label="Plugins", menu=pluginmenu)
-pluginmenu.add_command(label="Open SourceMod Download Page", command=open_sourcemod)
-pluginmenu.add_command(label="Open MetaMod:Source Download Page", command=open_metamod_source)
+downloadsmenu = tk.Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Downloads", menu=downloadsmenu)
+downloadsmenu.add_command(label="KVManager", command=open_kvmanager_page)
+downloadsmenu.add_command(label="UPnP Portmapper", command=open_upnp_portmapper_page)
+downloadsmenu.add_command(label="SourceMod", command=open_sourcemod)
+downloadsmenu.add_command(label="MetaMod:Source", command=open_metamod_source)
 
 helpmenu = tk.Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=helpmenu)
 helpmenu.add_command(label="Open Steam Guide", command=open_steam_guide)
-helpmenu.add_command(label="Download UPnP Portmapper", command=open_upnp_portmapper_page)
 helpmenu.add_command(label="Open GitHub Repository", command=open_github_repo)
-helpmenu.add_command(label="Check for new releases", command=open_github_releases)
 
 root.config(menu=menubar)
 
