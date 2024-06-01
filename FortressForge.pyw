@@ -125,7 +125,7 @@ def toggle_password_visibility():
 
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
-root.title("FortressForge v1.1.1")
+root.title("FortressForge v1.1.2")
 root.minsize(650, 400)
 
 # Menu bar
