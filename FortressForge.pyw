@@ -1,3 +1,4 @@
+
 import tkinter as tk
 from tkinter import messagebox, filedialog
 from tkinter import ttk
@@ -12,7 +13,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(script_dir, "server_config.json")
 
 # Function to run the server
-
 def run_server():
     server_exe = entry_exe.get()
     host_name = entry_name.get()
@@ -23,6 +23,7 @@ def run_server():
     token = entry_token.get()
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
+    force_restart = force_restart_var.get()
 
     # Function to check if required fields are filled in
     if not host_name or not port or not max_players or not map_name:
@@ -33,20 +34,32 @@ def run_server():
         messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
         return
 
-    command = f'"{server_exe}" -game tf -console -secure -port {port} +maxplayers {max_players} +map {map_name} +hostname "{host_name}"'
+    base_command = f'"{server_exe}" -game tf -console -secure -port {port} +maxplayers {max_players} +map {map_name} +hostname "{host_name}"'
     if password:
-        command += f' +sv_password "{password}"'
+        base_command += f' +sv_password "{password}"'
     if token:
-        command += f' +sv_setsteamaccount "{token}"'
+        base_command += f' +sv_setsteamaccount "{token}"'
     if command_line_options:
-        command += f' {command_line_options}'
+        base_command += f' {command_line_options}'
     if rcon_password:
-        command += f' +rcon_password "{rcon_password}"'
+        base_command += f' +rcon_password "{rcon_password}"'
 
     def run_command():
-        subprocess.Popen(command, shell=True)
+        while running:
+            process = subprocess.Popen(base_command, shell=True)
+            process.wait()  # Wait for the process to complete
+            if not force_restart_var.get() or not running: #! WARNING: Exception when FortressForge and srcds.exe are closed
+                break
 
+    global running
+    running = True
     threading.Thread(target=run_command).start()
+
+def toggle_force_restart():
+    global running
+    if not force_restart_var.get():
+        running = False
+
 
 # Function to browse for the executable
 def browse_file():
@@ -66,7 +79,8 @@ def save_configuration():
         "password": entry_password.get(),
         "token": entry_token.get(),
         "rcon_password": entry_rcon_password.get(),
-        "command_line_options": entry_options.get()
+        "command_line_options": entry_options.get(),
+        "force_restart": force_restart_var.get()
     }
     with open(config_file_path, "w") as config_file:
         json.dump(config, config_file, indent=4)
@@ -86,6 +100,7 @@ def load_configuration():
             entry_token.insert(0, config.get("token", ""))
             entry_rcon_password.insert(0, config.get("rcon_password", ""))
             entry_options.insert(0, config.get("command_line_options", ""))
+            force_restart_var.set(config.get("force_restart", False))
 
 # Function to validate that only numbers are entered
 def validate_number(P):
@@ -114,10 +129,18 @@ def toggle_token_visibility():
 def toggle_rcon_visibility():
     entry_rcon_password.config(show='' if rcon_var.get() else '*')
 
+def on_closing():
+    global running
+    running = False
+    root.destroy()
+
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
 root.title("FortressForge v1.2.1")
-root.minsize(700, 400)
+root.minsize(700, 450)
+
+# Bind the closing event to stop the server
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Menu bar
 menubar = tk.Menu(root)
@@ -183,55 +206,61 @@ entry_port = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_
 entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
 # Server Password
+password_var = tk.BooleanVar()
 ttk.Label(root, text="Server Password", font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
 entry_password = ttk.Entry(root, width=50, show="*")
 entry_password.grid(row=5, column=1, padx=10, pady=5)
-password_var = tk.BooleanVar()
-show_password = ttk.Checkbutton(root, text="Show Password", variable=password_var, command=toggle_password_visibility)
-show_password.grid(row=5, column=2, padx=10, pady=5, sticky="w")
+show_password_cb = ttk.Checkbutton(root, text="Show Password", variable=password_var, command=toggle_password_visibility)
+show_password_cb.grid(row=5, column=2, padx=10, pady=5, sticky="w")
 
-# Game Server Login Token with hyperlink
+# Game Server Login Token
+token_var = tk.BooleanVar()
 token_label = ttk.Label(root, text="Game Server Login Token", font=("Segoe UI", 9, "underline"), foreground="blue", cursor="hand2")
 token_label.grid(row=6, column=0, padx=10, pady=5, sticky="e")
 token_label.bind("<Button-1>", open_token_url)
 entry_token = ttk.Entry(root, width=50, show="*")
 entry_token.grid(row=6, column=1, padx=10, pady=5)
-token_var = tk.BooleanVar()
-show_token = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=toggle_token_visibility)
-show_token.grid(row=6, column=2, padx=10, pady=5, sticky="w")
+show_token_cb = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=toggle_token_visibility)
+show_token_cb.grid(row=6, column=2, padx=10, pady=5, sticky="w")
 
 # RCON Password
+rcon_var = tk.BooleanVar()
 ttk.Label(root, text="RCON Password", font=("Segoe UI", 9)).grid(row=7, column=0, padx=10, pady=5, sticky="e")
 entry_rcon_password = ttk.Entry(root, width=50, show="*")
 entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
-rcon_var = tk.BooleanVar()
-show_rcon = ttk.Checkbutton(root, text="Show RCON", variable=rcon_var, command=toggle_rcon_visibility)
-show_rcon.grid(row=7, column=2, padx=10, pady=5, sticky="w")
+show_rcon_cb = ttk.Checkbutton(root, text="Show RCON", variable=rcon_var, command=toggle_rcon_visibility)
+show_rcon_cb.grid(row=7, column=2, padx=10, pady=5, sticky="w")
 
-# Other Command Line Options with hyperlink
-options_label = ttk.Label(root, text="Other Command Line Options", font=("Segoe UI", 9, "underline"), foreground="blue", cursor="hand2")
-options_label.grid(row=8, column=0, padx=10, pady=5, sticky="e")
-options_label.bind("<Button-1>", open_command_line_options_url)
+# Other Command Line Options
+other_options_label = ttk.Label(root, text="Other Command Line Options", font=("Segoe UI", 9, "underline"), foreground="blue", cursor="hand2")
+other_options_label.grid(row=8, column=0, padx=10, pady=5, sticky="e")
+other_options_label.bind("<Button-1>", open_command_line_options_url)
 entry_options = ttk.Entry(root, width=50)
 entry_options.grid(row=8, column=1, padx=10, pady=5)
 
-# Run Server Button
-run_button = ttk.Button(root, text="Run Server", command=run_server)
-run_button.grid(row=9, column=1, padx=10, pady=10, sticky="w")
+# Force Restart on Server Crash
+force_restart_var = tk.BooleanVar()
+force_restart_cb = ttk.Checkbutton(root, text="Force Restart on Server Crash (BETA)", variable=force_restart_var, command=toggle_force_restart)
+force_restart_cb.grid(row=9, column=1, padx=10, pady=5, sticky="w")
 
 # Save Config Button
 save_button = ttk.Button(root, text="Save Config", command=save_configuration)
-save_button.grid(row=9, column=1, padx=10, pady=10, sticky="e")
+save_button.grid(row=10, column=1, padx=20, pady=10, sticky="w")
+
+# Run Server Button
+run_button = ttk.Button(root, text="Run Server", command=run_server)
+run_button.grid(row=10, column=1, padx=10, pady=10)
 
 # Mandatory Fields Note
 mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
-mandatory_note.grid(row=10, column=0, columnspan=3, pady=5)
+mandatory_note.grid(row=11, column=0, columnspan=3, pady=5)
 
 # Note that srcds_win64.exe is not compatible with 64bit
 bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
-bit_note.grid(row=11, column=0, columnspan=3, pady=5)
+bit_note.grid(row=12, column=0, columnspan=3, pady=5)
 
-# Load the configuration when the application starts
+# Load existing configuration on startup
 load_configuration()
 
+# Start the Tkinter event loop
 root.mainloop()
