@@ -116,7 +116,7 @@ def toggle_rcon_visibility():
 
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
-root.title("FortressForge v1.2.0")
+root.title("FortressForge v1.2.1")
 root.minsize(700, 400)
 
 # Menu bar
