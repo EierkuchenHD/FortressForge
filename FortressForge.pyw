@@ -7,6 +7,7 @@ import subprocess
 import webbrowser
 import json
 import threading
+import queue
 
 # Get the directory of the running script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,6 +15,7 @@ config_file_path = os.path.join(script_dir, "server_config.json")
 
 # Function to run the server
 def run_server():
+    global process, running, force_restart  # Make these global to access in on_closing and other threads
     server_exe = entry_exe.get()
     host_name = entry_name.get()
     map_name = entry_map.get()
@@ -47,19 +49,19 @@ def run_server():
     def run_command():
         while running:
             process = subprocess.Popen(base_command, shell=True)
-            process.wait()  # Wait for the process to complete
-            if not force_restart_var.get() or not running: #! WARNING: Exception when FortressForge and srcds.exe are closed
+            try:
+                process.wait()  # Wait for the process to complete
+            except:
+                process.terminate()  # Ensure the process is terminated
+            if not force_restart or not running:
                 break
 
-    global running
     running = True
     threading.Thread(target=run_command).start()
 
 def toggle_force_restart():
-    global running
-    if not force_restart_var.get():
-        running = False
-
+    global force_restart
+    force_restart = force_restart_var.get()
 
 # Function to browse for the executable
 def browse_file():
@@ -132,7 +134,10 @@ def toggle_rcon_visibility():
 def on_closing():
     global running
     running = False
+    if 'process' in globals():
+        process.terminate()  # Ensure the subprocess is terminated
     root.destroy()
+
 
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
