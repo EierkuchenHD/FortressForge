@@ -141,7 +141,7 @@ def on_closing():
 
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
-root.title("FortressForge v1.2.1")
+root.title("FortressForge v1.3.0")
 root.minsize(700, 450)
 
 # Bind the closing event to stop the server
@@ -245,7 +245,7 @@ entry_options.grid(row=8, column=1, padx=10, pady=5)
 
 # Force Restart on Server Crash
 force_restart_var = tk.BooleanVar()
-force_restart_cb = ttk.Checkbutton(root, text="Force Restart on Server Crash (BETA)", variable=force_restart_var, command=toggle_force_restart)
+force_restart_cb = ttk.Checkbutton(root, text="Force Restart on Server Crash", variable=force_restart_var, command=toggle_force_restart)
 force_restart_cb.grid(row=9, column=1, padx=10, pady=5, sticky="w")
 
 # Save Config Button
