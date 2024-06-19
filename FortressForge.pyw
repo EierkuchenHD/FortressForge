@@ -13,9 +13,8 @@ import queue
 script_dir = os.path.dirname(os.path.abspath(__file__))
 config_file_path = os.path.join(script_dir, "server_config.json")
 
-# Function to run the server
-def run_server():
-    global process, running, force_restart  # Make these global to access in on_closing and other threads
+# Function to create the command to run the server
+def create_command():
     server_exe = entry_exe.get()
     host_name = entry_name.get()
     map_name = entry_map.get()
@@ -25,16 +24,14 @@ def run_server():
     token = entry_token.get()
     rcon_password = entry_rcon_password.get()
     command_line_options = entry_options.get()
-    force_restart = force_restart_var.get()
 
-    # Function to check if required fields are filled in
     if not host_name or not port or not max_players or not map_name:
         messagebox.showwarning("Input Error", "Host Name, UDP Port, Maximum Amount of Players, and Map are required fields.")
-        return
+        return None
 
     if not os.path.isfile(server_exe):
         messagebox.showerror("File Not Found", f"The file '{server_exe}' does not exist.")
-        return
+        return None
 
     base_command = f'"{server_exe}" -game tf -console -secure -port {port} +maxplayers {max_players} +map {map_name} +hostname "{host_name}"'
     if password:
@@ -46,18 +43,28 @@ def run_server():
     if rcon_password:
         base_command += f' +rcon_password "{rcon_password}"'
 
+    return base_command
+
+# Function to run the server
+def run_server():
+    global process, running
+
+    base_command = create_command()
+    if base_command is None:
+        return
+
+    force_restart = force_restart_var.get()
+
     def run_command():
         while running:
             process = subprocess.Popen(base_command, shell=True)
-            try:
-                process.wait()  # Wait for the process to complete
-            except:
-                process.terminate()  # Ensure the process is terminated
+            process.wait()
             if not force_restart or not running:
                 break
 
     running = True
     threading.Thread(target=run_command).start()
+
 
 def toggle_force_restart():
     global force_restart
@@ -122,14 +129,10 @@ def open_token_url(event):
 def open_command_line_options_url(event):
     webbrowser.open_new("https://developer.valvesoftware.com/wiki/Command_line_options")
 
-def toggle_password_visibility():
-    entry_password.config(show='' if password_var.get() else '*')
+# General function to toggle visibility of password fields
+def toggle_visibility(entry, var):
+    entry.config(show='' if var.get() else '*')
 
-def toggle_token_visibility():
-    entry_token.config(show='' if token_var.get() else '*')
-
-def toggle_rcon_visibility():
-    entry_rcon_password.config(show='' if rcon_var.get() else '*')
 
 def on_closing():
     global running
@@ -215,7 +218,7 @@ password_var = tk.BooleanVar()
 ttk.Label(root, text="Server Password", font=("Segoe UI", 9)).grid(row=5, column=0, padx=10, pady=5, sticky="e")
 entry_password = ttk.Entry(root, width=50, show="*")
 entry_password.grid(row=5, column=1, padx=10, pady=5)
-show_password_cb = ttk.Checkbutton(root, text="Show Password", variable=password_var, command=toggle_password_visibility)
+show_password_cb = ttk.Checkbutton(root, text="Show Password", variable=password_var, command=lambda: toggle_visibility(entry_password, password_var))
 show_password_cb.grid(row=5, column=2, padx=10, pady=5, sticky="w")
 
 # Game Server Login Token
@@ -225,7 +228,7 @@ token_label.grid(row=6, column=0, padx=10, pady=5, sticky="e")
 token_label.bind("<Button-1>", open_token_url)
 entry_token = ttk.Entry(root, width=50, show="*")
 entry_token.grid(row=6, column=1, padx=10, pady=5)
-show_token_cb = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=toggle_token_visibility)
+show_token_cb = ttk.Checkbutton(root, text="Show GSLT", variable=token_var, command=lambda: toggle_visibility(entry_token, token_var))
 show_token_cb.grid(row=6, column=2, padx=10, pady=5, sticky="w")
 
 # RCON Password
@@ -233,7 +236,7 @@ rcon_var = tk.BooleanVar()
 ttk.Label(root, text="RCON Password", font=("Segoe UI", 9)).grid(row=7, column=0, padx=10, pady=5, sticky="e")
 entry_rcon_password = ttk.Entry(root, width=50, show="*")
 entry_rcon_password.grid(row=7, column=1, padx=10, pady=5)
-show_rcon_cb = ttk.Checkbutton(root, text="Show RCON", variable=rcon_var, command=toggle_rcon_visibility)
+show_rcon_cb = ttk.Checkbutton(root, text="Show RCON", variable=rcon_var, command=lambda: toggle_visibility(entry_rcon_password, rcon_var))
 show_rcon_cb.grid(row=7, column=2, padx=10, pady=5, sticky="w")
 
 # Other Command Line Options
