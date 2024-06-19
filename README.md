@@ -3,7 +3,7 @@
 FortressForge is a user-friendly graphical interface designed to simplify the process of creating and managing a 64bit Team Fortress 2 server. This application allows users to customize their server settings through an intuitive GUI and easily launch the server without needing to manually handle command-line options.
 
 <p align="center">
-<img src="https://github.com/EierkuchenHD/FortressForge/assets/68472374/80d8c5f2-5c09-4f06-ae21-395fffd4a873"/>
+<img src="https://github.com/EierkuchenHD/FortressForge/assets/68472374/2e8de135-a787-4486-b355-8fd575b6ca5c"/>
 </p>
 
 ## Features
