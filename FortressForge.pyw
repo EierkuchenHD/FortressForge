@@ -202,12 +202,12 @@ entry_map.grid(row=2, column=1, padx=10, pady=5)
 
 # Max Players
 ttk.Label(root, text="Max Players (1-100)*", font=("Segoe UI", 9)).grid(row=3, column=0, padx=10, pady=5, sticky="e")
-entry_max_players = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_players)
+entry_max_players = ttk.Entry(root, width=5, validate="key", validatecommand=vcmd_max_players)
 entry_max_players.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 
 # UDP Port
 ttk.Label(root, text="UDP Port (1-65535)*", font=("Segoe UI", 9)).grid(row=4, column=0, padx=10, pady=5, sticky="e")
-entry_port = ttk.Entry(root, width=10, validate="key", validatecommand=vcmd_max_portnumber)
+entry_port = ttk.Entry(root, width=7, validate="key", validatecommand=vcmd_max_portnumber)
 entry_port.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
 # Server Password
