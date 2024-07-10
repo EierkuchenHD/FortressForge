@@ -43,7 +43,16 @@ def create_command():
 
     return base_command
 
-# Function to run the server
+# Add this new function to update the server status
+def update_server_status():
+    global process
+    if 'process' in globals() and process.poll() is None:
+        status_label.config(text="Server Status: Running", foreground="green")
+    else:
+        status_label.config(text="Server Status: Closed", foreground="red")
+    root.after(1000, update_server_status)  # Check status every second
+
+# Modify the run_server function
 def run_server():
     global process, running, server_thread
 
@@ -58,10 +67,12 @@ def run_server():
             process.wait()
             if not force_restart_var.get() or not running:
                 break
+        update_server_status()  # Update status when server stops
 
     running = True
     server_thread = threading.Thread(target=run_command)
     server_thread.start()
+    update_server_status()  # Update status when server starts
 
 
 def toggle_force_restart():
@@ -167,11 +178,13 @@ def reset_to_defaults():
 
     force_restart_var.set(False)
 
+# Modify the on_closing function
 def on_closing():
     global running
     running = False
     if 'process' in globals():
         process.terminate()  # Ensure the subprocess is terminated
+    update_server_status()  # Update status when closing
     root.destroy()
 
 # Initialize the GUI window with a modern theme
@@ -306,6 +319,10 @@ mandatory_note.grid(row=12, column=0, columnspan=3, pady=5)
 # Note that srcds_win64.exe is not compatible with 64bit
 bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
 bit_note.grid(row=13, column=0, columnspan=3, pady=5)
+
+# Add this after setting up all other GUI elements
+status_label = tk.Label(root, text="Server Status: Closed", font=("Segoe UI", 9, "bold"), foreground="red")
+status_label.grid(row=14, column=0, columnspan=3, pady=5)
 
 # Load existing configuration on startup
 load_configuration()
