@@ -6,7 +6,6 @@ import subprocess
 import webbrowser
 import json
 import threading
-import queue
 
 # Get the directory of the running script
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -46,23 +45,23 @@ def create_command():
 
 # Function to run the server
 def run_server():
-    global process, running
+    global process, running, server_thread
 
     base_command = create_command()
     if base_command is None:
         return
 
-    force_restart = force_restart_var.get()
-
     def run_command():
+        global process
         while running:
             process = subprocess.Popen(base_command, shell=True)
             process.wait()
-            if not force_restart or not running:
+            if not force_restart_var.get() or not running:
                 break
 
     running = True
-    threading.Thread(target=run_command).start()
+    server_thread = threading.Thread(target=run_command)
+    server_thread.start()
 
 
 def toggle_force_restart():
