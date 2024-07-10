@@ -1,4 +1,3 @@
-
 import tkinter as tk
 from tkinter import messagebox, filedialog
 from tkinter import ttk
@@ -100,16 +99,27 @@ def load_configuration():
     if os.path.isfile(config_file_path):
         with open(config_file_path, "r") as config_file:
             config = json.load(config_file)
+            entry_exe.delete(0, tk.END)
             entry_exe.insert(0, config.get("server_exe", ""))
+            entry_name.delete(0, tk.END)
             entry_name.insert(0, config.get("host_name", ""))
+            entry_map.delete(0, tk.END)
             entry_map.insert(0, config.get("map_name", ""))
+            entry_max_players.delete(0, tk.END)
             entry_max_players.insert(0, config.get("max_players", ""))
+            entry_port.delete(0, tk.END)
             entry_port.insert(0, config.get("port", ""))
+            entry_password.delete(0, tk.END)
             entry_password.insert(0, config.get("password", ""))
+            entry_token.delete(0, tk.END)
             entry_token.insert(0, config.get("token", ""))
+            entry_rcon_password.delete(0, tk.END)
             entry_rcon_password.insert(0, config.get("rcon_password", ""))
+            entry_options.delete(0, tk.END)
             entry_options.insert(0, config.get("command_line_options", ""))
             force_restart_var.set(config.get("force_restart", False))
+    else:
+        messagebox.showinfo("Load", "No configuration file found. Using default values.")
 
 # Function to validate that only numbers are entered
 def validate_number(P):
@@ -123,6 +133,12 @@ def validate_max_players(P):
 def validate_max_portnumber(P):
     return P.isdigit() and 1 <= int(P) <= 65535 or P == ""
 
+def validate_map_name(P):
+    return all(c.isalnum() or c in '_-' for c in P) or P == ""
+
+def validate_server_name(P):
+    return len(P) <= 63  # Server names are typically limited to 63 characters
+
 def open_token_url(event):
     webbrowser.open_new("https://steamcommunity.com/dev/managegameservers")
 
@@ -133,6 +149,24 @@ def open_command_line_options_url(event):
 def toggle_visibility(entry, var):
     entry.config(show='' if var.get() else '*')
 
+def reset_to_defaults():
+    default_values = {
+        "exe": "",
+        "name": "My TF2 Server",
+        "map": "cp_badlands",
+        "max_players": "24",
+        "port": "27015",
+        "password": "",
+        "token": "",
+        "rcon_password": "",
+        "options": "",
+    }
+
+    for key, value in default_values.items():
+        globals()[f"entry_{key}"].delete(0, tk.END)
+        globals()[f"entry_{key}"].insert(0, value)
+
+    force_restart_var.set(False)
 
 def on_closing():
     global running
@@ -141,11 +175,10 @@ def on_closing():
         process.terminate()  # Ensure the subprocess is terminated
     root.destroy()
 
-
 # Initialize the GUI window with a modern theme
 root = tk.Tk()
-root.title("FortressForge v1.3.0")
-root.minsize(700, 450)
+root.title("FortressForge v1.4.0")
+root.minsize(700, 500)
 
 # Bind the closing event to stop the server
 root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -195,12 +228,12 @@ browse_button.grid(row=0, column=2, padx=10, pady=5)
 
 # Host Name
 ttk.Label(root, text="Host Name*", font=("Segoe UI", 9)).grid(row=1, column=0, padx=10, pady=5, sticky="e")
-entry_name = ttk.Entry(root, width=50)
+entry_name = ttk.Entry(root, width=50, validate="key", validatecommand=(root.register(validate_server_name), '%P'))
 entry_name.grid(row=1, column=1, padx=10, pady=5)
 
 # Map
 ttk.Label(root, text="Map*", font=("Segoe UI", 9)).grid(row=2, column=0, padx=10, pady=5, sticky="e")
-entry_map = ttk.Entry(root, width=50)
+entry_map = ttk.Entry(root, width=50, validate="key", validatecommand=(root.register(validate_map_name), '%P'))
 entry_map.grid(row=2, column=1, padx=10, pady=5)
 
 # Max Players
@@ -253,19 +286,27 @@ force_restart_cb.grid(row=9, column=1, padx=10, pady=5, sticky="w")
 
 # Save Config Button
 save_button = ttk.Button(root, text="Save Config", command=save_configuration)
-save_button.grid(row=10, column=1, padx=20, pady=10, sticky="w")
+save_button.grid(row=10, column=0, padx=5, pady=10, sticky="e")
+
+# Load Config Button
+load_button = ttk.Button(root, text="Load Config", command=load_configuration)
+load_button.grid(row=10, column=1, padx=5, pady=10)
 
 # Run Server Button
 run_button = ttk.Button(root, text="Run Server", command=run_server)
-run_button.grid(row=10, column=1, padx=10, pady=10)
+run_button.grid(row=10, column=2, padx=5, pady=10, sticky="w")
+
+# Reset to Defaults Button
+reset_button = ttk.Button(root, text="Reset to Defaults", command=reset_to_defaults)
+reset_button.grid(row=11, column=1, padx=5, pady=10)
 
 # Mandatory Fields Note
 mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
-mandatory_note.grid(row=11, column=0, columnspan=3, pady=5)
+mandatory_note.grid(row=12, column=0, columnspan=3, pady=5)
 
 # Note that srcds_win64.exe is not compatible with 64bit
 bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
-bit_note.grid(row=12, column=0, columnspan=3, pady=5)
+bit_note.grid(row=13, column=0, columnspan=3, pady=5)
 
 # Load existing configuration on startup
 load_configuration()
