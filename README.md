@@ -3,7 +3,7 @@
 FortressForge is a user-friendly graphical interface designed to simplify the process of creating and managing a 64bit Team Fortress 2 server. This application allows users to customize their server settings through an intuitive GUI and easily launch the server without needing to manually handle command-line options.
 
 <p align="center">
-<img src="https://github.com/EierkuchenHD/FortressForge/assets/68472374/2e8de135-a787-4486-b355-8fd575b6ca5c"/>
+<img src="https://github.com/user-attachments/assets/7bf310b4-c3ba-43b1-b0ee-540103045a24"/>
 </p>
 
 ## Features
@@ -31,5 +31,6 @@ Download the latest release of FortressForge under [Releases](https://github.com
 ## Acknowledgements
 
 - Thanks to the AlliedModders community for helping me out with server issues I had!
-- Thanks to AndrSator, creator of [SteamCMD-GUI](https://github.com/AndrSator/SteamCMD-GUI)
+- Thanks to AndrSator, creator of [SteamCMD-GUI](https://github.com/AndrSator/SteamCMD-GUI)!
 - Thanks to everyone who playtested my community server!
+  
