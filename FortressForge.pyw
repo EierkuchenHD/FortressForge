@@ -316,13 +316,9 @@ reset_button.grid(row=11, column=1, padx=5, pady=10)
 mandatory_note = tk.Label(root, text="Fields marked with * are mandatory.", font=("Segoe UI", 8, "italic"))
 mandatory_note.grid(row=12, column=0, columnspan=3, pady=5)
 
-# Note that srcds_win64.exe is not compatible with 64bit
-bit_note = tk.Label(root, text="SourceMod is not compatible with srcds_win64.exe yet.", font=("Segoe UI", 8, "italic"))
-bit_note.grid(row=13, column=0, columnspan=3, pady=5)
-
 # Add this after setting up all other GUI elements
 status_label = tk.Label(root, text="Server Status: Closed", font=("Segoe UI", 9, "bold"), foreground="red")
-status_label.grid(row=14, column=0, columnspan=3, pady=5)
+status_label.grid(row=13, column=0, columnspan=3, pady=5)
 
 # Load existing configuration on startup
 load_configuration()
