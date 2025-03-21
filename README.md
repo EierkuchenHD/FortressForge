@@ -22,7 +22,7 @@ FortressForge is a user-friendly graphical interface designed to simplify the pr
 
 ### Prerequisites
 
-- [Python 3.x](https://www.python.org/downloads/)
+- [Python 3.x](https://www.python.org/downloads)
 
 ### Installation
 
