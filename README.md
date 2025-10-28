@@ -3,7 +3,7 @@
 FortressForge is a user-friendly graphical interface designed to simplify the process of creating and managing a 64bit Team Fortress 2 server. This application allows users to customize their server settings through an intuitive GUI and easily launch the server without needing to manually handle command-line options.
 
 <p align="center">
-<img src="https://github.com/user-attachments/assets/7bf310b4-c3ba-43b1-b0ee-540103045a24"/>
+<img src="https://github.com/user-attachments/assets/a9ba1b4d-24d8-4ca1-8f1a-9c1a4988439e"/>
 </p>
 
 ## Features
@@ -26,7 +26,7 @@ FortressForge is a user-friendly graphical interface designed to simplify the pr
 
 ### Installation
 
-Download the latest release of FortressForge under [Releases](https://github.com/EierkuchenHD/FortressForge/releases/tag/v1.0.0). It is recommended to put this file into your server directory where `srcds_win64.exe` is located.
+Download the latest release of FortressForge directly by clicking on [FortressForge.pyw](https://github.com/EierkuchenHD/FortressForge/blob/main/FortressForge.pyw). It is recommended to put this file into your server directory where `srcds_win64.exe` is located.
 
 ## Acknowledgements
 
@@ -34,3 +34,4 @@ Download the latest release of FortressForge under [Releases](https://github.com
 - Thanks to AndrSator, creator of [SteamCMD-GUI](https://github.com/AndrSator/SteamCMD-GUI)!
 - Thanks to everyone who playtested my community server!
   
+
